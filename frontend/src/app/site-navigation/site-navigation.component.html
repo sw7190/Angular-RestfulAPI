@@ -1,0 +1,23 @@
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+  <a class="navbar-brand" href="#">SW Angular Site</a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+    <div class="navbar-nav">
+      <a class="nav-item nav-link" [routerLink]="['/']" [routerLinkActive] = "['active']" >메인</a>
+      <a class="nav-item nav-link" [routerLink]="['/userList']" [routerLinkActive] = "['active']">유저 목록</a>
+      <a class="nav-item nav-link" [routerLink]="['/routeName']" [routerLinkActive] = "['active']">뭐할까</a>
+      <a class="nav-item nav-link" [routerLink]="['/routeName']" [routerLinkActive] = "['active']">뭐할까</a>
+    </div>
+  </div>
+  <div class="btn-box">
+    <span *ngIf="api.isLogin();else not_login">
+      <a href="#"><button class="btn btn-danger" (click)="api.logout()">로그아웃</button></a>
+    </span>
+    <ng-template #not_login>
+      <a [routerLink]="['/login']" [routerLinkActive] = "['active']" ><button class="btn btn-light">로그인</button></a>
+      <a [routerLink]="['/join']" [routerLinkActive] = "['active']" ><button class="btn btn-light">회원가입</button></a>
+    </ng-template>
+  </div>
+</nav>
