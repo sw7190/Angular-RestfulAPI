@@ -8,11 +8,14 @@ import { ApiService } from '../api.service';
 })
 export class SiteInfoComponent implements OnInit {
 
+  name: string;
+
   constructor(
     private api: ApiService
   ) { }
 
   ngOnInit() {
+    this.name = localStorage.getItem('user') ? JSON.parse(localStorage.getItem('user')).name : '';
   }
 
 }

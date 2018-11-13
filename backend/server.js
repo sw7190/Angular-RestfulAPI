@@ -11,11 +11,13 @@ app.use(express.urlencoded({ extended : true }));
 app.use((req, res, next) => {
     res.setHeader('Access-Control-Allow-Origin', 'http://localhost:4200');
     res.setHeader('Access-Control-Allow-Methods', 'GET POST, PUT, DELETE');
-    res.setHeader('Access-Control-Allow-Headers', 'content-type');
+    res.setHeader('Access-Control-Allow-Headers', 'content-type, x-access-token');
     next();
-})
+});
 
 app.use('/api/user', require('./api/user'));
+
+app.use('/api/board', require('./api/board'));
 
 //server start
 app.listen(port, _ => {

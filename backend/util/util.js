@@ -1,4 +1,5 @@
-
+const jwt = require("jsonwebtoken");
+const JWT_KEY = "%SWJJANG%";
 let util = {};
 
 util.success = (data, msg = null) => {
@@ -14,6 +15,20 @@ util.fail = (msg) =>{
         success: false,
         msg: msg,
         data: null
+    }
+}
+
+util.isLogin = (req, res, next) => {
+    const token = req.headers['x-access-token'];
+    if (!token) return res.json(util.fail('token이 없습니다.'));
+    else {
+        jwt.verify(token, JWT_KEY, (err, decoded) => {
+            if(err) return res.json(util.fail(err));
+            else {
+                req.decoded = decoded;
+                next();
+            }
+        });
     }
 }
 

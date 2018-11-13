@@ -34,6 +34,7 @@ router.post("/login", (req, res, next) => {
             let flag = bcrypt.compareSync(pw, data[0].password);
             if(flag){
                 const payload = { //token에 넣을 값
+                    idx: data[0].idx,
                     userid: data[0].userid,
                     username: data[0].name
                 };
@@ -71,6 +72,32 @@ router.post("/", (req, res, next) => {
                     res.json(util.success(data,"회원가입 완료"));
                 }
 
+            });
+        }
+    });
+});
+
+router.get('/me', util.isLogin, (req, res, next) => {
+    const query = "SELECT * FROM user WHERE idx = ?";
+    conn.query(query, [req.decoded.idx], (err, data) => {
+    if (err || !data[0]) { res.json(util.fail(err)); }
+    else { res.json(util.success(data[0])); }
+    });
+});
+
+router.get("/refresh", util.isLogin, (req, res, next) => {
+    const query = "SELECT * FROM user WHERE idx = ?";
+    conn.query(query, [req.decoded.idx], (err, data) => {
+        if (err || !data[0]) { return res.json(util.fail(err)); }
+        else {
+            const payload = { //token에 넣을 값
+                idx: data[0].idx,
+                userid: data[0].userid,
+                username: data[0].name
+            };
+            jwt.sign(payload, JWT_KEY, {}, (err, token) => {
+                if(err) return res.json(util.fail(err));
+                res.json(util.success(token));
             });
         }
     });
