@@ -7,4 +7,4 @@ Angular6
 Node express RestfulAPI
 
 ##  
-JsonWebToken 
+JsonWebToken 인증
